@@ -675,7 +675,11 @@ def public_commission():
 def health():
     return jsonify({"ok": True, "service": "FixScore API"})
 
+# Always initialize the database on import — this runs whether the app is
+# started directly (`python app.py`) or via a production server like
+# gunicorn (`gunicorn app:app`), which never executes the __main__ block.
+init()
+
 if __name__ == "__main__":
-    init()
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=False)
